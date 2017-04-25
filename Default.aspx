@@ -1,17 +1,10 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="Default.aspx.cs" Inherits="_Default" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/page.master" AutoEventWireup="true" CodeFile="Default.aspx.cs" Inherits="_Default" %>
 
-<!DOCTYPE html>
-
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head runat="server">
-    <title></title>
-</head>
-<body>
-    <h1>This is a test page.</h1>
-    <form id="form1" runat="server">
-    <div>
-    
+<asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
+</asp:Content>
+<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
+    <div class="ui main container">
+        <h1 class="ui header">test</h1>
     </div>
-    </form>
-</body>
-</html>
+</asp:Content>
+
