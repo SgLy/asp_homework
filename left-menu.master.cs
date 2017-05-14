@@ -7,6 +7,9 @@ using System.Web.UI.WebControls;
 
 public partial class page : System.Web.UI.MasterPage
 {
+    public bool is_admin = true;
+    public bool logined = false;
+    public string username = "SgLy";
     protected void Page_Load(object sender, EventArgs e)
     {
 
