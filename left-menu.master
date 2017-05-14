@@ -52,7 +52,7 @@
       <div class="ui container" id="content">
         <form id="form1" runat="server">
           <div>
-            <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+            <asp:ContentPlaceHolder ID="content" runat="server">
             </asp:ContentPlaceHolder>
           </div>
         </form>
@@ -62,7 +62,4 @@
 </body>
 <script src="/static/jquery-3.2.1.min.js"></script>
 <script src="/static/semantic-ui/semantic.min.js"></script>
-<script>
-  $('.ui.sidebar').sidebar('toggle');
-</script>
 </html>

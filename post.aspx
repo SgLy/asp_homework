@@ -1,30 +1,35 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="post.aspx.cs" Inherits="post" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/top-menu.master" CodeFile="post.aspx.cs" Inherits="post" %>
 
-<!DOCTYPE html>
-
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head runat="server">
-    <title></title>
-</head>
-<body>
-    <form id="form1" runat="server">
-    <div>>
-        <a href="forum.aspx">返回论坛</a>
-        <div class="postInfo">
-            <asp:Label ID="Title" runat="server" Text="Label"></asp:Label>
-            <asp:HyperLink ID="AuthorInfo" runat="server"><asp:Label ID="Author" runat="server" Text="Label"></asp:Label></asp:HyperLink>
-            <asp:Label ID="Date" runat="server" Text="Label"></asp:Label>
-            <asp:Label ID="Content" runat="server" Text="Label"></asp:Label>
-        </div>
-        <div class="reviews">
-            <h2>回复：</h2>
-            <asp:PlaceHolder ID="Reviews" runat="server"></asp:PlaceHolder>
-        </div>
-        <div class="postReview">
-            <asp:TextBox ID="ContentPost" runat="server"></asp:TextBox>
-            <asp:Button ID="PostReview" runat="server" Text="Post Review" onClick="OnPostReview"/>
-        </div>
+<asp:Content ID="Content2" ContentPlaceHolderID="content" runat="Server">
+  <style>
+    #postReview #review {
+      margin-top: 4em;
+    }
+    .ui.raised.segment {
+      margin-top: 2em;
+    }
+  </style>
+  <div class="ui container" id="postInfo">
+    <div class="ui vertical segment">
+      <asp:Label class="ui huge header" ID="Title" runat="server" Text="Label"></asp:Label></br></br>
+    由<asp:HyperLink ID="AuthorInfo" runat="server">
+      <asp:Label ID="Author" runat="server" Text="Label"></asp:Label>
+    </asp:HyperLink>
+      于<asp:Label ID="Date" runat="server" Text="Label"></asp:Label>发布
+      <div class="ui raised segment">
+        <p><%= content %></p>
+      </div>
     </div>
-    </form>
-</body>
-</html>
+  </div>
+  <div class="ui vertical segment" id="review">
+    <h3>回复：</h3>
+  </div>
+  <div class="ui container">
+    <asp:placeholder id="Reviews" runat="server"></asp:placeholder>
+  </div>
+  <div class="ui vertical segment" id="postReview">
+      <h3>新回复：</h3>
+      <asp:TextBox TextMode="MultiLine" rows=5 id="ContentPost" runat="server"></asp:TextBox></br></br>
+      <asp:button class="ui fluid large positive submit button" id="PostReview" runat="server" text="回复" onclick="OnPostReview" />
+  </div>
+</asp:Content>

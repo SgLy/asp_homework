@@ -34,6 +34,7 @@ public partial class userinfo : System.Web.UI.Page
         {
             Button delete = new Button();
             delete.Text = "删除";
+            delete.CssClass = "ui negative compact button";
             delete.ID = userID.ToString();
             delete.Click += new EventHandler(this.onDelete);
             PlaceHolder.Controls.Add(delete);

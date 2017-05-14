@@ -1,28 +1,54 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="userinfo.aspx.cs" Inherits="userinfo" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/top-menu.master" CodeFile="userinfo.aspx.cs" Inherits="userinfo" %>
 
-<!DOCTYPE html>
-
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head runat="server">
-    <title></title>
-</head>
-<body>
-    <form id="form1" runat="server">
-    <div>
-        <h5>用户名</h5>
-        <asp:Label id="username" runat="server"></asp:Label>
-        <h5>邮箱</h5>
-        <asp:Label id="email" runat="server"></asp:Label>
-        <h5>学院</h5>
-        <asp:Label id="school" runat="server"></asp:Label>
-        <h5>专业</h5>
-        <asp:Label id="major" runat="server"></asp:Label>
-        <h5>年级</h5>
-        <asp:Label id="grade" runat="server"></asp:Label>
-        <h5>学号</h5>
-        <asp:Label id="stuID" runat="server"></asp:Label>
-        <asp:PlaceHolder ID="PlaceHolder" runat="server"></asp:PlaceHolder>
+<asp:Content ID="Content2" ContentPlaceHolderID="content" runat="Server">
+  <style>
+    #grid {
+      max-width: 700px;
+      margin: 0 auto;
+    }
+    #description {
+      padding: 0;
+    }
+  </style>
+  <div class="ui middle aligned center aligned grid" id="grid">
+    <div class="sixteen wide column">
+      <table class="ui definition table" id="description">
+        <tbody>
+          <tr>
+            <td class="collapsing">用户名</td>
+            <td>
+              <asp:Label ID="username" runat="server"></asp:Label></td>
+          </tr>
+          <tr>
+            <td class="collapsing">邮箱</td>
+            <td>
+              <asp:Label ID="email" runat="server"></asp:Label></td>
+          </tr>
+          <tr>
+            <td class="collapsing">学院</td>
+            <td>
+              <asp:Label ID="school" runat="server"></asp:Label></td>
+          </tr>
+          <tr>
+            <td class="collapsing">专业</td>
+            <td>
+              <asp:Label ID="major" runat="server"></asp:Label></td>
+          </tr>
+          <tr>
+            <td class="collapsing">年级</td>
+            <td>
+              <asp:Label ID="grade" runat="server"></asp:Label></td>
+          </tr>
+          <tr>
+            <td class="collapsing">学号</td>
+            <td>
+              <asp:Label ID="stuID" runat="server"></asp:Label></td>
+          </tr>
+        </tbody>
+      </table>
     </div>
-    </form>
-</body>
-</html>
+    <div class="sixteen wide column">
+      <asp:PlaceHolder ID="PlaceHolder" runat="server"></asp:PlaceHolder>
+    </div>
+  </div>
+</asp:Content>

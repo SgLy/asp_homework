@@ -12,6 +12,9 @@ using System.Configuration;
 
 public partial class _Default : System.Web.UI.Page
 {
+    protected void Page_PreInit(Object sender, EventArgs e) {
+        this.MasterPageFile = "~/top-menu.master";
+    }
     protected void Page_Load(object sender, EventArgs e)
     {
         if (Session["currentUser"] != null)

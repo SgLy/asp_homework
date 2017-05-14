@@ -10,7 +10,10 @@ using System.Web.UI.WebControls;
 public partial class post : System.Web.UI.Page
 {
     int postID;
-
+    protected string content;
+    protected void Page_PreInit(Object sender, EventArgs e) {
+        this.MasterPageFile = "~/top-menu.master";
+    }
     protected void Page_Load(object sender, EventArgs e)
     {
         postID = int.Parse(Request.QueryString["id"]);
@@ -36,23 +39,31 @@ public partial class post : System.Web.UI.Page
                 Author.Text = authorNameGet.GetString(1);
                 authorNameGet.Close();
                 Date.Text = dataReader.GetDateTime(3).ToString("yyyy-MM-dd HH:mm");
-                Content.Text = dataReader.GetString(4);
+                content = dataReader.GetString(4);
 
                 dataReader.Close();
                 // Get reviews
                 comm.CommandText = "SELECT * FROM reviews WHERE postID = " + postID;
                 dataReader = comm.ExecuteReader();
 
-                string eachPost = @"<div><h4>作者: <a href=" + "\"userinfo.aspx?userID=@userID\"" + ">@author</a></h4><h4>时间: @date</h4><p>内容：@content</p></div>";
+                string eachPost1 =
+                    @"<div class=" +
+                    "\"ui vertical segment\"" +
+                    ">由<a href=" +
+                    "\"userinfo.aspx?userID=@userID\"" +
+                    ">@author</a>于@date发布";
+                string eachPost2 =
+                    @"<div class=" +
+                    "\"ui raised segment\"" +
+                    "><p>@content</p></div></div>";
                 while (dataReader.Read())
                 {
-                    string temp = eachPost.Replace("@content", dataReader.GetString(4));
                     // Get author
                     comm2.Connection = dbConnection;
                     comm2.CommandText = "SELECT * FROM users where id = " + dataReader.GetInt32(2);
                     authorNameGet = comm2.ExecuteReader();
                     authorNameGet.Read();
-                    temp = temp.Replace("@author", authorNameGet.GetString(1));
+                    string temp = eachPost1.Replace("@author", authorNameGet.GetString(1));
                     authorNameGet.Close();
                     temp = temp.Replace("@date", dataReader.GetDateTime(3).ToString("yyyy-MM-dd HH:mm"));
                     temp = temp.Replace("@userID", dataReader.GetInt32(2).ToString());
@@ -61,11 +72,15 @@ public partial class post : System.Web.UI.Page
                     if (Session["currentUser"].ToString() == "admin")
                     {
                         Button delete = new Button();
+                        delete.CssClass= "circular compact ui right floated basic negative button";
                         delete.Text = "删除";
                         delete.ID = dataReader.GetInt32(0).ToString();
                         delete.Click += new EventHandler(this.onDelete);
                         Reviews.Controls.Add(delete);
                     }
+
+                    temp = eachPost2.Replace("@content", dataReader.GetString(4));
+                    Reviews.Controls.Add(new LiteralControl(temp));
                 }
 
                 dbConnection.Close();
@@ -88,7 +103,7 @@ public partial class post : System.Web.UI.Page
                 GC.Collect();
                 dbConnection.Open();
                 comm.CommandText = "INSERT INTO reviews (postID, authorID, curtime, content) VALUES(" + postID + ", " + Session["userID"] +
-                    ", DateTime('now'), \"" + Content.Text + "\")";
+                    ", DateTime('now'), \"" + ContentPost.Text + "\")";
                 comm.ExecuteNonQuery();
                 dbConnection.Close();
                 Response.Write(@"<script>alert('发表成功！');</script>");
