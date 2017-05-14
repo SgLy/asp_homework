@@ -14,6 +14,7 @@
             <asp:HyperLink ID="userInfoLink" runat="server">
                 <asp:Label ID="currentUser" runat="server" Text="Label"></asp:Label>
             </asp:HyperLink>
+            <asp:Button ID="Logout" runat="server" Text="登出" OnClick="Logout_Click" />
         </div>
         <asp:PlaceHolder ID="posts" runat="server"></asp:PlaceHolder>
         <div class = "newPost">

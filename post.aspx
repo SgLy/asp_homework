@@ -8,7 +8,8 @@
 </head>
 <body>
     <form id="form1" runat="server">
-    <div>
+    <div>>
+        <a href="forum.aspx">返回论坛</a>
         <div class="postInfo">
             <asp:Label ID="Title" runat="server" Text="Label"></asp:Label>
             <asp:HyperLink ID="AuthorInfo" runat="server"><asp:Label ID="Author" runat="server" Text="Label"></asp:Label></asp:HyperLink>
@@ -16,6 +17,7 @@
             <asp:Label ID="Content" runat="server" Text="Label"></asp:Label>
         </div>
         <div class="reviews">
+            <h2>回复：</h2>
             <asp:PlaceHolder ID="Reviews" runat="server"></asp:PlaceHolder>
         </div>
         <div class="postReview">

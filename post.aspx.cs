@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
-using System.Data.SqlClient;
+using System.Data.SQLite;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
@@ -15,52 +15,57 @@ public partial class post : System.Web.UI.Page
     {
         postID = int.Parse(Request.QueryString["id"]);
 
-        using (SqlConnection dbConnection = new SqlConnection(ConfigurationManager.ConnectionStrings["ConnectionString"].ConnectionString))
+        using (SQLiteConnection dbConnection = new SQLiteConnection(ConfigurationManager.ConnectionStrings["ConnectionString"].ConnectionString))
         {
-            using (SqlCommand comm = dbConnection.CreateCommand())
+            using (SQLiteCommand comm = dbConnection.CreateCommand())
             {
                 dbConnection.Open();
-                
+
                 // Get post information
                 comm.CommandText = "SELECT * FROM posts WHERE id = " + postID;
-                SqlDataReader dataReader = comm.ExecuteReader();
+                SQLiteDataReader dataReader = comm.ExecuteReader();
                 dataReader.Read();
                 Title.Text = dataReader.GetString(2);
                 // Get author
-                comm.CommandText = "SELECT * FROM users WHERE id = " + dataReader.GetInt32(1);
-                SqlDataReader authorNameGet = comm.ExecuteReader();
+                SQLiteCommand comm2 = new SQLiteCommand();
+                comm2.Connection = dbConnection;
+                comm2.CommandText = "SELECT * FROM users where id = " + dataReader.GetInt32(1);
+                SQLiteDataReader authorNameGet = comm2.ExecuteReader();
                 authorNameGet.Read();
-                AuthorInfo.NavigateUrl = "userinfo.aspx?id=" + dataReader.GetInt32(1);
+                AuthorInfo.NavigateUrl = "userinfo.aspx?userID=" + dataReader.GetInt32(1);
                 Author.Text = authorNameGet.GetString(1);
-                Date.Text = dataReader.GetDateTime(3).ToLongTimeString();
+                authorNameGet.Close();
+                Date.Text = dataReader.GetDateTime(3).ToString("yyyy-MM-dd HH:mm");
                 Content.Text = dataReader.GetString(4);
 
-
+                dataReader.Close();
                 // Get reviews
                 comm.CommandText = "SELECT * FROM reviews WHERE postID = " + postID;
                 dataReader = comm.ExecuteReader();
 
-                string eachPost = @"<div><h4>auther: @auther</h4><h4>date: @date</h4><p>@content</p></div>";
+                string eachPost = @"<div><h4>作者: <a href=" + "\"userinfo.aspx?userID=@userID\"" + ">@author</a></h4><h4>时间: @date</h4><p>内容：@content</p></div>";
                 while (dataReader.Read())
                 {
                     string temp = eachPost.Replace("@content", dataReader.GetString(4));
                     // Get author
-                    comm.CommandText = "SELECT * FROM users where id = " + dataReader.GetInt32(1);
-                    authorNameGet = comm.ExecuteReader();
+                    comm2.Connection = dbConnection;
+                    comm2.CommandText = "SELECT * FROM users where id = " + dataReader.GetInt32(2);
+                    authorNameGet = comm2.ExecuteReader();
                     authorNameGet.Read();
                     temp = temp.Replace("@author", authorNameGet.GetString(1));
-                    temp = temp.Replace("@date", dataReader.GetDateTime(3).ToShortTimeString());
+                    authorNameGet.Close();
+                    temp = temp.Replace("@date", dataReader.GetDateTime(3).ToString("yyyy-MM-dd HH:mm"));
+                    temp = temp.Replace("@userID", dataReader.GetInt32(2).ToString());
 
-                    LiteralControl literal = new LiteralControl(temp);
+                    Reviews.Controls.Add(new LiteralControl(temp));
                     if (Session["currentUser"].ToString() == "admin")
                     {
                         Button delete = new Button();
                         delete.Text = "删除";
                         delete.ID = dataReader.GetInt32(0).ToString();
-                        delete.OnClientClick = "onDelete";
-                        literal.Controls.Add(delete);
+                        delete.Click += new EventHandler(this.onDelete);
+                        Reviews.Controls.Add(delete);
                     }
-                    Reviews.Controls.Add(literal);
                 }
 
                 dbConnection.Close();
@@ -76,16 +81,18 @@ public partial class post : System.Web.UI.Page
             return;
         }
 
-        using (SqlConnection dbConnection = new SqlConnection(ConfigurationManager.ConnectionStrings["ConnectionString"].ConnectionString))
+        using (SQLiteConnection dbConnection = new SQLiteConnection(ConfigurationManager.ConnectionStrings["ConnectionString"].ConnectionString))
         {
-            using (SqlCommand comm = dbConnection.CreateCommand())
+            using (SQLiteCommand comm = dbConnection.CreateCommand())
             {
+                GC.Collect();
                 dbConnection.Open();
-                comm.CommandText = "INSERT INTO reviews (postID, authorID, time, content) VALUES(" + postID + ", " + Session["userID"] + 
-                    ", GETDATE(), " + Content.Text + ")";
+                comm.CommandText = "INSERT INTO reviews (postID, authorID, curtime, content) VALUES(" + postID + ", " + Session["userID"] +
+                    ", DateTime('now'), \"" + Content.Text + "\")";
                 comm.ExecuteNonQuery();
                 dbConnection.Close();
                 Response.Write(@"<script>alert('发表成功！');</script>");
+                Response.Redirect(Request.RawUrl);
             }
         }
     }
@@ -93,16 +100,19 @@ public partial class post : System.Web.UI.Page
     protected void onDelete(object sender, EventArgs e)
     {
         Button delete = (Button)sender;
-        using (SqlConnection dbConnection = new SqlConnection(ConfigurationManager.ConnectionStrings["ConnectionString"].ConnectionString))
+        using (SQLiteConnection dbConnection = new SQLiteConnection(ConfigurationManager.ConnectionStrings["ConnectionString"].ConnectionString))
         {
-            using (SqlCommand comm = dbConnection.CreateCommand())
+            using (SQLiteCommand comm = dbConnection.CreateCommand())
             {
+                GC.Collect();
                 dbConnection.Open();
                 comm.CommandText = "DELETE FROM reviews WHERE id = " + delete.ID;
                 comm.ExecuteNonQuery();
                 dbConnection.Close();
                 Response.Write(@"<script>alert('删除成功！');</script>");
+                Response.Redirect(Request.RawUrl);
             }
         }
 
     }
+}

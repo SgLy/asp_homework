@@ -21,7 +21,7 @@
         <asp:Label id="grade" runat="server"></asp:Label>
         <h5>学号</h5>
         <asp:Label id="stuID" runat="server"></asp:Label>
-
+        <asp:PlaceHolder ID="PlaceHolder" runat="server"></asp:PlaceHolder>
     </div>
     </form>
 </body>

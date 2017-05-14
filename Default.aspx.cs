@@ -7,14 +7,17 @@ using System.Web.UI.WebControls;
 
 using System.Security.Cryptography;
 using System.Text;
-using System.Data.SqlClient;
+using System.Data.SQLite;
 using System.Configuration;
 
 public partial class _Default : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
-
+        if (Session["currentUser"] != null)
+        {
+            Server.Transfer("forum.aspx");
+        }
     }
 
     protected void loginClick(object sender, EventArgs e)
@@ -44,29 +47,31 @@ public partial class _Default : System.Web.UI.Page
             md5passwd = stringbuilder.ToString();
         }
 
-        using (SqlConnection userDBConnection = new SqlConnection(ConfigurationManager.ConnectionStrings["ConnectionString"].ConnectionString))
+        using (SQLiteConnection userDBConnection = new SQLiteConnection(ConfigurationManager.ConnectionStrings["ConnectionString"].ConnectionString))
         {
-            using (SqlCommand comm = userDBConnection.CreateCommand())
+            using (SQLiteCommand comm = userDBConnection.CreateCommand())
             {
                 userDBConnection.Open();
-                comm.CommandText = "SELECT * FROM users WHERE username = " + Username;
-                SqlDataReader dataReader = comm.ExecuteReader();
-                if (!dataReader.Read())
+                comm.CommandText = "SELECT * FROM users WHERE username = \"" + username.Text + "\"";
+                using (SQLiteDataReader dataReader = comm.ExecuteReader())
                 {
-                    Response.Write(@"<script>alert('无此用户！');</script>");
-                    userDBConnection.Close();
-                    return;
+
+                    if (!dataReader.Read())
+                    {
+                        Response.Write(@"<script>alert('无此用户！');</script>");
+                        return;
+                    }
+                    if (String.Compare(md5passwd, dataReader.GetString(2)) == 0)
+                    {
+                        Session["currentUser"] = username.Text;
+                        Session["userID"] = dataReader.GetInt32(0);
+                        Server.Transfer("forum.aspx");
+                    }
+                    else
+                    {
+                        Response.Write(@"<script>alert('密码错误！');</script>");
+                    }
                 }
-                if (String.Compare(Password, dataReader.GetString(2)) == 0)
-                {
-                    Session["currentUser"] = username;
-                    Session["userID"] = dataReader.GetInt32(0);
-                    Server.Transfer("forum.aspx");
-                } else
-                {
-                    Response.Write(@"<script>alert('密码错误！');</script>");
-                }
-                userDBConnection.Close();
             }
         }
         
