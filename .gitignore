@@ -1,1 +1,4 @@
 *.dll
+Bin
+App_Data/data.db
+*.config
