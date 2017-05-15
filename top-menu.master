@@ -53,6 +53,9 @@
         <a href="/switch-menu.aspx?ret=<%= Request.Url.AbsoluteUri %>" class="item">
           切换纵向菜单
         </a>
+        <a href="/manage.aspx" class="item">
+          功能一览
+          </a>
       </div>
     </div>
   </div>

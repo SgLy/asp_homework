@@ -23,7 +23,10 @@ public partial class edituser : System.Web.UI.Page
             Response.Redirect("Default.aspx");
             return;
         }
-        userID = int.Parse(Request.QueryString["userID"]);
+        if (Request.QueryString["userID"] == null)
+            userID = (int)Session["userID"];
+        else
+            userID = int.Parse(Request.QueryString["userID"]);
         if (userID != (int)Session["userID"] && Session["currentUser"].ToString() != "admin")
         {
             Response.Write(@"<script>alert('你无权修改！');</script>");

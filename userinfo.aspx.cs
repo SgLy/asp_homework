@@ -20,7 +20,11 @@ public partial class userinfo : System.Web.UI.Page
             Response.Redirect("Default.aspx");
             return;
         }
-        int userID = int.Parse(Request.QueryString["userID"]);
+        int userID;
+        if (Request.QueryString["userID"] == null)
+            userID = (int)Session["userID"];
+        else
+            userID = int.Parse(Request.QueryString["userID"]);
         using (SQLiteConnection dbConnection = new SQLiteConnection(ConfigurationManager.ConnectionStrings["ConnectionString"].ConnectionString))
         {
             using (SQLiteCommand comm = dbConnection.CreateCommand())
