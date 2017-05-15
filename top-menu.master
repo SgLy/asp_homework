@@ -29,7 +29,7 @@
             </a>
       <% if (logined && is_admin) { %>
       <span class="item" style="width: 50px;"></span>
-      <a href="/users" class="item">
+      <a href="/users.aspx" class="item">
         <i class="users icon"></i>用户管理
             </a>
       <% } %>
