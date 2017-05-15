@@ -3,11 +3,12 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="title" runat="Server">登录逸仙论坛</asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="content" runat="Server">
   <style>
-    .column {
+    #content-grid {
       max-width: 450px;
+      margin: 0 auto;
     }
   </style>
-    <div class="ui middle aligned center aligned grid">
+    <div class="ui middle aligned center aligned grid" id="content-grid">
       <div class="column">
         <h2 class="ui header">登录</h2>
         <div class="ui stacked segment">

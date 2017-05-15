@@ -24,6 +24,7 @@
   <div class="ui inverted fixed huge borderless menu">
     <div class="ui container">
       <a href="/" class="item"><b>逸仙论坛</b></a>
+      <span class="item" style="width: 2em;"></span>
       <a href="/forum.aspx" class="item">
         <i class="browser icon"></i>看帖
             </a>
@@ -48,6 +49,10 @@
           <i class="add user icon"></i>注册 
         </a>
         <% } %>
+      <span class="item" style="width: 2em;"></span>
+        <a href="/switch-menu.aspx?ret=<%= Request.Url.AbsoluteUri %>" class="item">
+          切换纵向菜单
+        </a>
       </div>
     </div>
   </div>

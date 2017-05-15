@@ -14,6 +14,7 @@
   </style>
   <div class="ui middle aligned center aligned grid" id="grid">
     <div class="sixteen wide column">
+      <h2 class="ui header">注册</h2>
       <table class="ui definition table" id="description">
         <tbody>
           <tr>

@@ -12,8 +12,17 @@ using System.Web.UI.WebControls;
 public partial class edituser : System.Web.UI.Page
 {
     int userID;
+    protected void Page_PreInit(Object sender, EventArgs e) {
+        if (Session["menuStyle"] == null)
+            Session["menuStyle"] = "top";
+        this.MasterPageFile = "~/" + (string)Session["menuStyle"] + "-menu.master";
+    }
     protected void Page_Load(object sender, EventArgs e)
     {
+        if (Session["currentUser"] == null) {
+            Response.Redirect("Default.aspx");
+            return;
+        }
         userID = int.Parse(Request.QueryString["userID"]);
         if (userID != (int)Session["userID"] && Session["currentUser"].ToString() != "admin")
         {

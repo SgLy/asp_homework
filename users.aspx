@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/top-menu.master" CodeFile="users.aspx.cs" Inherits="users" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/left-menu.master" CodeFile="users.aspx.cs" Inherits="users" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="title" runat="server">用户管理</asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="content" runat="server">

@@ -13,10 +13,16 @@ public partial class post : System.Web.UI.Page
     protected string content;
     protected string title;
     protected void Page_PreInit(Object sender, EventArgs e) {
-        this.MasterPageFile = "~/top-menu.master";
+        if (Session["menuStyle"] == null)
+            Session["menuStyle"] = "top";
+        this.MasterPageFile = "~/" + (string)Session["menuStyle"] + "-menu.master";
     }
     protected void Page_Load(object sender, EventArgs e)
     {
+        if (Session["currentUser"] == null) {
+            Response.Redirect("Default.aspx");
+            return;
+        }
         postID = int.Parse(Request.QueryString["id"]);
 
         using (SQLiteConnection dbConnection = new SQLiteConnection(ConfigurationManager.ConnectionStrings["ConnectionString"].ConnectionString))

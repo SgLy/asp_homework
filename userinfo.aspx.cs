@@ -9,8 +9,17 @@ using System.Web.UI.WebControls;
 
 public partial class userinfo : System.Web.UI.Page
 {
+    protected void Page_PreInit(Object sender, EventArgs e) {
+        if (Session["menuStyle"] == null)
+            Session["menuStyle"] = "top";
+        this.MasterPageFile = "~/" + (string)Session["menuStyle"] + "-menu.master";
+    }
     protected void Page_Load(object sender, EventArgs e)
     {
+        if (Session["currentUser"] == null) {
+            Response.Redirect("Default.aspx");
+            return;
+        }
         int userID = int.Parse(Request.QueryString["userID"]);
         using (SQLiteConnection dbConnection = new SQLiteConnection(ConfigurationManager.ConnectionStrings["ConnectionString"].ConnectionString))
         {

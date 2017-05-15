@@ -1,7 +1,5 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/top-menu.master" CodeFile="forum.aspx.cs" Inherits="forum" %>
 
-<%@ MasterType VirtualPath="~/top-menu.master" %>
-
 <asp:Content ID="Content1" ContentPlaceHolderID="title" runat="Server">帖子列表 - 逸仙论坛</asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="content" runat="Server">
   <style>

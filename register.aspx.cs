@@ -11,6 +11,11 @@ using System.Web.UI.WebControls;
 
 public partial class register : System.Web.UI.Page
 {
+    protected void Page_PreInit(Object sender, EventArgs e) {
+        if (Session["menuStyle"] == null)
+            Session["menuStyle"] = "top";
+        this.MasterPageFile = "~/" + (string)Session["menuStyle"] + "-menu.master";
+    }
     protected void Page_Load(object sender, EventArgs e)
     {
 

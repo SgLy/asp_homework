@@ -29,8 +29,10 @@
     <asp:placeholder id="Reviews" runat="server"></asp:placeholder>
   </div>
   <div class="ui vertical segment" id="postReview">
-      <h3>新回复：</h3>
-      <asp:TextBox TextMode="MultiLine" rows=5 id="ContentPost" runat="server"></asp:TextBox></br></br>
-      <asp:button class="ui fluid large positive submit button" id="PostReview" runat="server" text="回复" onclick="OnPostReview" />
+    <h3>新回复：</h3>
+    <div class="field">
+      <asp:TextBox TextMode="MultiLine" Rows="5" ID="ContentPost" runat="server"></asp:TextBox>
+    </div>
+    <asp:Button class="ui fluid large positive submit button" ID="PostReview" runat="server" Text="回复" OnClick="OnPostReview" />
   </div>
 </asp:Content>

@@ -11,8 +11,17 @@ public partial class users : System.Web.UI.Page
 {
     protected List<Dictionary<string, string>> data;
     private Dictionary<string, string> d;
+    protected void Page_PreInit(Object sender, EventArgs e) {
+        if (Session["menuStyle"] == null)
+            Session["menuStyle"] = "top";
+        this.MasterPageFile = "~/" + (string)Session["menuStyle"] + "-menu.master";
+    }
     protected void Page_Load(object sender, EventArgs e)
     {
+        if (Session["currentUser"] == null) {
+            Response.Redirect("Default.aspx");
+            return;
+        }
         if (Session["currentUser"].ToString() != "admin")
         {
             Response.Write(@"<script>alert('你无权访问！');</script>");

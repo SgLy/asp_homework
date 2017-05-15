@@ -15,7 +15,7 @@
   <title>
     <asp:ContentPlaceHolder ID="title" runat="server"></asp:ContentPlaceHolder>
   </title>
-  <link rel="stylesheet" href="/static/semantic-ui/semantic.min.css" />
+  <link rel="stylesheet" href="/static/semantic-ui/dist/semantic.min.css" />
   <asp:ContentPlaceHolder ID="head" runat="server">
   </asp:ContentPlaceHolder>
 
@@ -24,33 +24,41 @@
   <div class="ui grid container">
     <div class="four wide tablet three wide computer column">
       <div class="ui left fixed inverted vertical menu">
-        <a href="/" class="item"><b>网站标题</b></a>
-        <a href="/add" class="item">
-          <i class="browser icon"></i>广场
+        <a href="/" class="item"><b>逸仙论坛</b></a>
+        <span class="item" style="height: 2em;"></span>
+        <a href="/forum.aspx" class="item">
+          <i class="browser icon"></i>看帖
         </a>
         <% if (logined && is_admin) { %>
-        <span class="item" style="width: 50px;"></span>
-        <a href="/users" class="item">
+        <a href="/users.aspx" class="item">
           <i class="users icon"></i>用户管理
         </a>
         <% } %>
+        <span class="item" style="height: 5em;"></span>
         <% if (logined) { %>
-        <a href="/modify" class="item"><b><%= username %></b>
+        <a href="<%= userlink %>" class="item"><b><%= username %></b>
           <% if (is_admin) { %>&nbsp;&nbsp;(管理员)<% } %>
         </a>
-        <a href="/logout" class="item">
+        <a href="/logout.aspx" class="item">
           <i class="sign out icon"></i>登出
         </a>
         <% } else { %>
-        <a href="/login" class="item">
+        <a href="/Default.aspx" class="item">
           <i class="sign in icon"></i>登录
         </a>
-      </div>
+        <a href="/register.aspx" class="item">
+          <i class="sign in icon"></i>注册
+          </a>
       <% } %>
+        <span class="item" style="height: 2em;"></span>
+        <a href="/switch-menu.aspx?ret=<%= Request.Url.AbsoluteUri %>" class="item">
+          切换横向菜单
+          </a>
+      </div>
     </div>
     <div class="twelve wide tablet thirteen wide computer column">
-      <div class="ui container" id="content">
-        <form id="form1" runat="server">
+      <div class="ui container" style="margin-top: 5em;">
+        <form id="form1" runat="server" class="ui form">
           <div>
             <asp:ContentPlaceHolder ID="content" runat="server">
             </asp:ContentPlaceHolder>
@@ -61,5 +69,5 @@
   </div>
 </body>
 <script src="/static/jquery-3.2.1.min.js"></script>
-<script src="/static/semantic-ui/semantic.min.js"></script>
+<script src="/static/semantic-ui/dist/semantic.min.js"></script>
 </html>
