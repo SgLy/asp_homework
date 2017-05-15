@@ -29,7 +29,15 @@ public partial class userinfo : System.Web.UI.Page
                 dbConnection.Close();
             }
         }
-
+        if ((int)Session["userID"] == userID || Session["currentUser"].ToString() == "admin")
+        {
+            Button edit = new Button();
+            edit.Text = "编辑信息";
+            edit.CssClass = "ui negative compact button";
+            edit.ID = "edit" + userID.ToString();
+            edit.Click += new EventHandler(this.onEdit);
+            PlaceHolder.Controls.Add(edit);
+        }
         if (Session["currentUser"].ToString() == "admin")
         {
             Button delete = new Button();
@@ -58,5 +66,11 @@ public partial class userinfo : System.Web.UI.Page
             }
         }
 
+    }
+
+    protected void onEdit(object sender, EventArgs e)
+    {
+        Button delete = (Button)sender;
+        Server.Transfer("edituser.aspx?userID=" + delete.ID.Substring(4));
     }
 }
