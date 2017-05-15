@@ -23,7 +23,7 @@ public partial class forum : System.Web.UI.Page {
         using (SQLiteConnection dbConnection = new SQLiteConnection(ConfigurationManager.ConnectionStrings["ConnectionString"].ConnectionString)) {
             using (SQLiteCommand comm = dbConnection.CreateCommand()) {
                 dbConnection.Open();
-                comm.CommandText = "SELECT * FROM posts";
+                comm.CommandText = "SELECT * FROM posts ORDER BY curtime DESC";
                 using (SQLiteDataReader dataReader = comm.ExecuteReader()) {
 
                     string eachPost1 =
