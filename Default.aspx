@@ -1,8 +1,6 @@
 ﻿<%@ Page Title="" Language="C#"  AutoEventWireup="true" CodeFile="Default.aspx.cs" Inherits="_Default" %>
 
-<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="Server">
-  登录
-</asp:Content>
+<asp:Content ID="Content1" ContentPlaceHolderID="title" runat="Server">登录逸仙论坛</asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="content" runat="Server">
   <style>
     .column {

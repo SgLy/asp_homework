@@ -1,5 +1,6 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/top-menu.master" CodeFile="register.aspx.cs" Inherits="register" %>
 
+<asp:Content ID="Content1" ContentPlaceHolderID="title" runat="server">注册逸仙论坛账号</asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="content" runat="Server">
   <style>
     #grid {

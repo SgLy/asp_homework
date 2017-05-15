@@ -9,6 +9,8 @@ using System.Web.UI.WebControls;
 
 public partial class users : System.Web.UI.Page
 {
+    protected List<Dictionary<string, string>> data;
+    private Dictionary<string, string> d;
     protected void Page_Load(object sender, EventArgs e)
     {
         if (Session["currentUser"].ToString() != "admin")
@@ -24,18 +26,18 @@ public partial class users : System.Web.UI.Page
                 dbConnection.Open();
                 comm.CommandText = "SELECT * FROM users";
                 SQLiteDataReader dataReader = comm.ExecuteReader();
-                string eachUser = @"<a href=" + "\"userinfo.aspx?userID=@userID\"" + @">@username</a> @email @school @major @grade @stuID";
+                data = new List<Dictionary<string, string>>();
                 while (dataReader.Read())
                 {
-                    string temp = eachUser;
-                    temp = temp.Replace("@userID", dataReader.GetInt32(0).ToString());
-                    temp = temp.Replace("@username", dataReader.GetString(1));
-                    temp = temp.Replace("@email", dataReader.GetString(3));
-                    temp = temp.Replace("@school", dataReader.GetString(4));
-                    temp = temp.Replace("@major" ,dataReader.GetString(5));
-                    temp = temp.Replace("@grade", dataReader.GetInt32(6).ToString());
-                    temp = temp.Replace("@stuID", dataReader.GetString(7));
-                    PlaceHolder.Controls.Add(new LiteralControl(temp));
+                    d = new Dictionary<string, string>(); 
+                    d.Add("userID", dataReader.GetInt32(0).ToString());
+                    d.Add("username", dataReader.GetString(1));
+                    d.Add("email", dataReader.GetString(3));
+                    d.Add("school", dataReader.GetString(4));
+                    d.Add("major", dataReader.GetString(5));
+                    d.Add("grade", dataReader.GetInt32(6).ToString());
+                    d.Add("stuID", dataReader.GetString(7));
+                    data.Add(d);
                 }
                 dbConnection.Close();
             }

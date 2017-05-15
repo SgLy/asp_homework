@@ -1,5 +1,6 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/top-menu.master" CodeFile="post.aspx.cs" Inherits="post" %>
 
+<asp:Content ID="Content1" ContentPlaceHolderID="title" runat="Server"><%= title %> - 逸仙论坛</asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="content" runat="Server">
   <style>
     #postReview #review {

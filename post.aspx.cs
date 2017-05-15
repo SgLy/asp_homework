@@ -11,6 +11,7 @@ public partial class post : System.Web.UI.Page
 {
     int postID;
     protected string content;
+    protected string title;
     protected void Page_PreInit(Object sender, EventArgs e) {
         this.MasterPageFile = "~/top-menu.master";
     }
@@ -39,6 +40,8 @@ public partial class post : System.Web.UI.Page
                 Author.Text = authorNameGet.GetString(1);
                 authorNameGet.Close();
                 Date.Text = dataReader.GetDateTime(3).ToString("yyyy-MM-dd HH:mm");
+
+                title = dataReader.GetString(2);
                 content = dataReader.GetString(4);
 
                 dataReader.Close();

@@ -1,5 +1,6 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/top-menu.master" CodeFile="edituser.aspx.cs" Inherits="edituser" %>
 
+<asp:Content ID="Content1" ContentPlaceHolderID="title" runat="server">编辑<%= username.Text %>@逸仙论坛</asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="content" runat="Server">
   <style>
     #grid {

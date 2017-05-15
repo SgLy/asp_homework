@@ -23,13 +23,12 @@
 <body>
   <div class="ui inverted fixed huge borderless menu">
     <div class="ui container">
-      <a href="/" class="item"><b>网站标题</b></a>
+      <a href="/" class="item"><b>逸仙论坛</b></a>
       <a href="/forum.aspx" class="item">
-        <i class="browser icon"></i>论坛
+        <i class="browser icon"></i>看帖
             </a>
       <% if (logined && is_admin) { %>
-      <span class="item" style="width: 50px;"></span>
-      <a href="/users" class="item">
+      <a href="/users.aspx" class="item">
         <i class="users icon"></i>用户管理
             </a>
       <% } %>
